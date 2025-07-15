@@ -1,0 +1,5 @@
+@ECHO off
+IF NOT EXIST ..\MODULESBIN\ 
+(
+	MKDIR ..\MODULESBIN\
+)
