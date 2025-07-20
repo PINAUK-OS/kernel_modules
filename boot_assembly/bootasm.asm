@@ -13,7 +13,17 @@ module_header_end:
 section .text
 align 8
 
+
 module_entry:
+    ; Set up empty/invalid IDT to guarantee #GP fault when exception occurs
+    xor rax, rax
+    lidt [rax]           ; Load IDT from address 0x00000000 (invalid descriptor)
+
+    ; Trigger an exception (e.g., division by zero)
+    xor rax, rax
+    div rax              ; Divide by zero => #DE
+
+    ; If the system survived (it shouldn't), halt
     cli
     hlt
     ret
